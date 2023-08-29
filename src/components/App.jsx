@@ -12,6 +12,18 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    if (localStorage.getItem !== null) {
+      this.setState({ contacts: JSON.parse(localStorage.getItem('contacts')) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   isAlreadyExists = inputName => {
     return this.state.contacts.some(({ name }) => name === inputName);
   };
